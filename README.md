@@ -1,44 +1,180 @@
-# Smart Task Manager
-
-基于 SpringBoot + Vue 的任务管理系统，实现任务增删改查、JWT认证、Redis缓存。
-
-## 技术栈
-
-- SpringBoot
-- MyBatis
-- Redis
-- JWT
-- Vue3
-- MySQL
-
-## 项目功能
-
-- 用户登录 (JWT认证)
-- 任务增删改查
-- 任务状态切换
-- Redis缓存任务列表
-- 分页查询任务
+# Smart Task Manager (SpringBoot + Vue + AI)
+基于 AI 的任务管理系统，支持用户登录、任务管理和 AI 自动总结任务。
 
 ## 项目截图
-<img width="1920" height="939" alt="screenshot" src="https://github.com/user-attachments/assets/889e388b-4e73-41df-9575-0b70a21631e3" />
+<img width="1914" height="884" alt="screenshotplus" src="https://github.com/user-attachments/assets/6198de00-7c27-43ce-8307-d3fd56efc284" />
 
-## API 示例
+## 技术栈
+后端：
+- Java
+- Spring Boot
+- MyBatis
+- MySQL
+- JWT
 
-GET /tasks
+前端：
+- Vue 3
+- Vite
+- Fetch API
 
-POST /tasks
+AI：
+- 大模型 API（任务总结）
 
-PUT /tasks/{id}
+---
 
-DELETE /tasks/{id}
+## 功能
 
-## 技术难点
+- 用户登录（JWT鉴权）
+- 任务增删改查
+- AI 自动总结任务
+- 前后端分离架构
 
-在实现 JWT 认证时遇到 CORS 跨域问题。
+---
 
-浏览器发送请求前会进行 **OPTIONS 预检请求**，该请求不会携带 Authorization 头，导致 JWT 拦截器返回 401。
+## 项目结构
 
-解决方案是在拦截器中放行 OPTIONS 请求：if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-    return true;
+```
+smart-task-manager
+│
+├─ backend
+│  ├─ controller
+│  ├─ mapper
+│  ├─ service
+│  └─ config
+│
+├─ frontend
+│  ├─ src
+│  │  ├─ App.vue
+│  │  ├─ Login.vue
+│  │  └─ main.js
+│
+└─ README.md
+```
+
+---
+
+## API接口
+
+### 用户登录
+
+```
+POST /login
+```
+
+请求：
+
+```json
+{
+  "username":"admin",
+  "password":"123456"
 }
-记录：通过该问题加深了对 CORS 跨域机制与 JWT 认证流程的理解。
+```
+
+返回：
+
+```
+JWT Token
+```
+
+---
+
+### 获取任务列表
+
+```
+GET /tasks
+```
+
+Header：
+
+```
+Authorization: Bearer token
+```
+
+---
+
+### 新增任务
+
+```
+POST /tasks
+```
+
+```
+{
+  "title":"学习SpringBoot",
+  "done":false
+}
+```
+
+---
+
+### AI任务总结
+
+```
+POST /ai/summary
+```
+
+请求：
+
+```
+["学习Java","投递简历","准备面试"]
+```
+
+返回：
+
+```
+AI总结任务内容
+```
+
+---
+
+## 本地运行
+
+### 1 启动数据库
+
+创建数据库：
+
+```
+CREATE DATABASE task_db;
+```
+
+---
+
+### 2 启动后端
+
+运行 Spring Boot 项目：
+
+```
+mvn spring-boot:run
+```
+
+默认端口：
+
+```
+8080
+```
+
+---
+
+### 3 启动前端
+
+```
+npm install
+npm run dev
+```
+
+访问：
+
+```
+http://localhost:5173
+```
+
+---
+
+## 项目亮点
+
+- 前后端分离架构
+- JWT 用户认证
+- AI 自动总结任务
+- 完整 CRUD 任务管理系统
+
+---
